@@ -4644,6 +4644,11 @@
   "resolved" "https://registry.npmjs.org/lodash.truncate/-/lodash.truncate-4.4.2.tgz"
   "version" "4.4.2"
 
+"lodash.wrap@^4.1.1":
+  "integrity" "sha1-nDdwlHqCHsaXipNXHhphea/Nf8g="
+  "resolved" "https://registry.npmjs.org/lodash.wrap/-/lodash.wrap-4.1.1.tgz"
+  "version" "4.1.1"
+
 "lodash@^4.17.10", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.7.0":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
@@ -5737,6 +5742,13 @@
     "invariant" "^2.2.4"
     "lodash" "^4.17.21"
     "prop-types" "^15.7.2"
+
+"react-native-global-font@^1.0.3":
+  "integrity" "sha512-yzsFcJhlFn5OAQGuxS/Pa7WBbcOj0H/o2Irve5R5yWcRx4e1k3F3SpZs6F9qfzTKXr9nhjPKtMgMpIQwvbQeVQ=="
+  "resolved" "https://registry.npmjs.org/react-native-global-font/-/react-native-global-font-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "lodash.wrap" "^4.1.1"
 
 "react-native-gradle-plugin@^0.0.6":
   "integrity" "sha512-eIlgtsmDp1jLC24dRn43hB3kEcZVqx6DUQbR0N1ABXGnMEafm9I3V3dUUeD1vh+Dy5WqijSoEwLNUPLgu5zDMg=="

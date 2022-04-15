@@ -27,6 +27,7 @@ const GettingStarted = ({navigation}) => {
         title={"Let's Start"}
         color="#6373ec"
         placement="right"
+        style={{padding: 15}}
         icon={
           <Icon
             name="arrow-right"
@@ -37,7 +38,10 @@ const GettingStarted = ({navigation}) => {
         }
         iconPosition="right"
         onPress={() => {
-          navigation.navigate('HomeScreen');
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'HomeScreen'}],
+          });
         }}
       />
     </View>
