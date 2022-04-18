@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createTheme, ThemeProvider} from '@rneui/themed';
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import CreateNote from './src/screens/screen_createNote';
 import GettingStarted from './src/screens/screen_gettingStarted';
 import HomeScreen from './src/screens/screen_home';
 
@@ -30,10 +31,11 @@ const App = () => {
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator
-            screenOptions={{headerShown: false}}
+            screenOptions={{headerShown: false, headerTransparent: true}}
             initialRouteName="GettingStarted">
             <Stack.Screen name="GettingStarted" component={GettingStarted} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="CreateNote" component={CreateNote} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

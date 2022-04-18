@@ -8,12 +8,12 @@ import {
 } from 'react-native-gesture-handler';
 import HomeCard from '../components/HomeCard';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [Notes, setNotes] = useState([
     {
       createdAt: 1649986246090,
       lastUpdated: 1649986246090,
-      type: 'note',
+      type: 'reminder',
       title: 'First Note',
       content:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
@@ -21,7 +21,7 @@ const HomeScreen = () => {
     {
       createdAt: 1649986246090,
       lastUpdated: 1649986246590,
-      type: 'note',
+      type: 'audio',
       title: 'First Note',
       content:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
@@ -29,7 +29,7 @@ const HomeScreen = () => {
     {
       createdAt: 1649986246090,
       lastUpdated: 1649986247090,
-      type: 'note',
+      type: 'image',
       title: 'First Note',
       content:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
@@ -37,79 +37,7 @@ const HomeScreen = () => {
     {
       createdAt: 1649986247590,
       lastUpdated: 1649986247590,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986248090,
-      lastUpdated: 1649986248090,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986248590,
-      lastUpdated: 1649986248590,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986249090,
-      lastUpdated: 1649986249090,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986250090,
-      lastUpdated: 1649986249590,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986250090,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986250590,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986251090,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986252090,
-      type: 'note',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986252590,
-      type: 'note',
+      type: 'reminder',
       title: 'First Note',
       content:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
@@ -131,7 +59,7 @@ const HomeScreen = () => {
         lightTheme
         containerStyle={{
           padding: 15,
-          backgroundColor: '#f0f3f7',
+          backgroundColor: '#f4f8fb',
           borderTopWidth: 0,
           borderBottomWidth: 0,
         }}
@@ -147,7 +75,7 @@ const HomeScreen = () => {
             });
           }}
           style={Selected.AllNotes ? styles.filterBtnActive : styles.filterBtn}>
-          <Text>All Notes</Text>
+          <Text style={styles.filterBtn_Text}>All Notes</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -159,7 +87,7 @@ const HomeScreen = () => {
             });
           }}
           style={Selected.Reminder ? styles.filterBtnActive : styles.filterBtn}>
-          <Text>Reminder</Text>
+          <Text style={styles.filterBtn_Text}>Reminder</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -171,7 +99,7 @@ const HomeScreen = () => {
             });
           }}
           style={Selected.Audio ? styles.filterBtnActive : styles.filterBtn}>
-          <Text>Audio</Text>
+          <Text style={styles.filterBtn_Text}>Audio</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -183,14 +111,14 @@ const HomeScreen = () => {
             });
           }}
           style={Selected.Images ? styles.filterBtnActive : styles.filterBtn}>
-          <Text>Images</Text>
+          <Text style={styles.filterBtn_Text}>Images</Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView>
         {Notes.map(note => (
           <HomeCard
-            key={note.updatedAt}
+            key={note.lastUpdated}
             type={note.type}
             lastUpdated={note.lastUpdated}
             title={note.title}
@@ -204,6 +132,7 @@ const HomeScreen = () => {
         color="#6373ec"
         placement="right"
         style={{padding: 15}}
+        onPress={() => navigation.navigate('CreateNote')}
       />
     </View>
   );
@@ -213,7 +142,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   HomeScreen: {
-    backgroundColor: '#f0f3f7',
+    backgroundColor: '#f4f8fb',
     flex: 1,
     height: '100%',
   },
@@ -232,7 +161,7 @@ const styles = StyleSheet.create({
   },
   filterBtn: {
     padding: 7,
-    backgroundColor: '#edeef0',
+    backgroundColor: '#ecedef',
     margin: 10,
     borderRadius: 5,
   },
@@ -241,5 +170,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#6373ec',
     margin: 10,
     borderRadius: 5,
+  },
+  filterBtn_Text: {
+    color: '#000',
   },
 });

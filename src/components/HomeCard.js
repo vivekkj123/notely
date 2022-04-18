@@ -4,7 +4,31 @@ import {Card} from '@rneui/themed';
 import {Icon} from '@rneui/base';
 const HomeCard = ({type, lastUpdated, title, content}) => {
   let date = new Date(lastUpdated);
-  console.log(date);
+  // const Icons = {
+  //   reminder: 'notifications',
+  //   audio: 'music-note',
+  //   image: 'photo',
+  // };
+  const Icons = [
+    {
+      type: 'image',
+      backgroundColor: '#6170e6',
+      icon: 'photo',
+    },
+    {
+      type: 'reminder',
+
+      backgroundColor: '#4dc08d',
+      icon: 'notifications',
+    },
+    {
+      type: 'audio',
+      backgroundColor: '#ed676c',
+      icon: 'music-note',
+    },
+  ];
+  let Iconstyle = Icons.find(icon => icon.type === type);
+
   return (
     // <View>
     //   <Text>{type}</Text>
@@ -15,8 +39,8 @@ const HomeCard = ({type, lastUpdated, title, content}) => {
     <Card containerStyle={{borderRadius: 10, backgroundColor: '#fff'}}>
       <View style={{flexDirection: 'row'}}>
         <Icon
-          name="notifications"
-          backgroundColor={'#4dc08d'}
+          name={Iconstyle.icon}
+          backgroundColor={Iconstyle.backgroundColor}
           borderRadius={100}
           iconStyle={{
             color: '#fff',
