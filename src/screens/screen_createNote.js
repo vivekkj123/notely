@@ -1,10 +1,17 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Header, Icon} from '@rneui/base';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import {getDBConnection, getNotes, saveNote} from '../db-service';
 
 const CreateNote = ({navigation}) => {
   let currentDate = new Date().toLocaleString();
+  const [NewNote, setNewNote] = useState({
+    lastUpdated: currentDate,
+    type: 'reminder',
+    title: '',
+    content: '',
+  });
   return (
     <React.Fragment>
       <React.Fragment>
@@ -25,6 +32,14 @@ const CreateNote = ({navigation}) => {
               color={'#6d74d2'}
               name="check"
               type="material-community"
+              onPress={async () => {
+                const db = await getDBConnection();
+                await saveNote(db, NewNote);
+                navigation.reset({
+                  index: 0,
+                  routes: [{name: 'HomeScreen'}],
+                });
+              }}
             />
           }
         />
@@ -34,6 +49,8 @@ const CreateNote = ({navigation}) => {
             placeholder="Heading"
             placeholderTextColor={'#6a6a6a'}
             autoFocus
+            value={NewNote.title}
+            onChangeText={newTitle => setNewNote({...NewNote, title: newTitle})}
           />
           <Text style={styles.NoteDate}>{currentDate}</Text>
           <ScrollView
@@ -44,15 +61,43 @@ const CreateNote = ({navigation}) => {
               placeholder="Write here..."
               placeholderTextColor={'#6a6a6a'}
               multiline
+              value={NewNote.content}
+              onChangeText={newContent =>
+                setNewNote({...NewNote, content: newContent})
+              }
             />
           </ScrollView>
         </View>
       </React.Fragment>
       <View style={styles.bottomBar}>
-        <Icon name="music-note" color={'#f45750'} />
-        <Icon name="photo" color={'#81bfa6'} />
-        <Icon name="notifications" color={'#8784bb'} />
-        <Icon name="check-circle-outline" color={'#fccb90'} />
+        <Icon
+          name="music-note"
+          color={'#f45750'}
+          onPress={() => {
+            setNewNote({...NewNote, type: 'audio'});
+          }}
+        />
+        <Icon
+          name="photo"
+          color={'#81bfa6'}
+          onPress={() => {
+            setNewNote({...NewNote, type: 'image'});
+          }}
+        />
+        <Icon
+          name="notifications"
+          color={'#8784bb'}
+          onPress={() => {
+            setNewNote({...NewNote, type: 'reminder'});
+          }}
+        />
+        <Icon
+          name="check-circle-outline"
+          color={'#fccb90'}
+          onPress={() => {
+            setNewNote({...NewNote, type: 'todo'});
+          }}
+        />
       </View>
     </React.Fragment>
   );
