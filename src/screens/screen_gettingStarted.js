@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from '@rneui/themed';
 import {FAB, Icon, Image} from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -33,11 +33,7 @@ const GettingStarted = ({navigation}) => {
       </Text>
       <View style={styles.ImageTodo}>
         <Image
-          style={{
-            height: 500,
-            width: 600,
-            resizeMode: 'cover',
-          }}
+          style={styles.Illustration}
           source={require('../../assets/todo-illustration.png')}
         />
       </View>
@@ -46,7 +42,7 @@ const GettingStarted = ({navigation}) => {
         title={"Let's Start"}
         color="#6373ec"
         placement="right"
-        style={{padding: 15}}
+        style={styles.FAB}
         icon={
           <Icon
             name="arrow-right"
@@ -86,5 +82,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -125,
     right: -200,
+  },
+  FAB: {
+    padding: 15,
+  },
+  Illustration: {
+    height: 500,
+    width: 600,
+    resizeMode: 'cover',
   },
 });

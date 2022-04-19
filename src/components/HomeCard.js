@@ -41,33 +41,39 @@ const HomeCard = ({type, lastUpdated, title, content}) => {
     //   <Text>{updatedAt}</Text>
     //   <Text>{content}</Text>
     // </View>
-    <Card containerStyle={{borderRadius: 10, backgroundColor: '#fff'}}>
-      <View style={{flexDirection: 'row'}}>
+    <Card containerStyle={styles.CardContainer}>
+      <View style={styles.CardView}>
         <Icon
           name={Iconstyle.icon}
           backgroundColor={Iconstyle.backgroundColor}
           borderRadius={100}
-          iconStyle={{
-            color: '#fff',
-            padding: 10,
-          }}
+          iconStyle={styles.CardIcon}
         />
-        <View style={{paddingLeft: 20}}>
-          <Card.FeaturedTitle style={{color: '#343434'}}>
-            {title}
-          </Card.FeaturedTitle>
-          <Card.FeaturedSubtitle style={{color: '#515151'}}>
+        <View style={styles.titleDateView}>
+          <Card.FeaturedTitle style={styles.title}>{title}</Card.FeaturedTitle>
+          <Card.FeaturedSubtitle style={styles.date}>
             {date.toLocaleString()}
           </Card.FeaturedSubtitle>
         </View>
       </View>
 
       <Card.Divider />
-      <Text style={{color: 'black'}}>{content}</Text>
+      <Text style={styles.content}>{content}</Text>
     </Card>
   );
 };
 
 export default HomeCard;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  CardContainer: {borderRadius: 10, backgroundColor: '#fff'},
+  CardView: {flexDirection: 'row'},
+  CardIcon: {
+    color: '#fff',
+    padding: 10,
+  },
+  titleDateView: {paddingLeft: 20},
+  title: {color: '#343434'},
+  date: {color: '#515151'},
+  content: {color: '#000'},
+});

@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {Header, Icon} from '@rneui/base';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
-import {getDBConnection, getNotes, saveNote} from '../db-service';
+import {getDBConnection, saveNote} from '../db-service';
 
 const CreateNote = ({navigation}) => {
   let currentDate = new Date().toLocaleString();

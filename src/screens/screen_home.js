@@ -43,12 +43,7 @@ const HomeScreen = ({navigation}) => {
       </View>
       <SearchBar
         lightTheme
-        containerStyle={{
-          padding: 15,
-          backgroundColor: '#f4f8fb',
-          borderTopWidth: 0,
-          borderBottomWidth: 0,
-        }}
+        containerStyle={styles.SearchBarContainer}
         value={Search}
         onChangeText={SearchFunction}
       />
@@ -150,7 +145,7 @@ const HomeScreen = ({navigation}) => {
         icon={<Icon name="add" color="#fff" />}
         color="#6373ec"
         placement="right"
-        style={{padding: 15}}
+        style={styles.FAB}
         onPress={() => navigation.navigate('CreateNote')}
       />
     </View>
@@ -198,4 +193,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     color: '#000',
   },
+  SearchBarContainer: {
+    padding: 15,
+    backgroundColor: '#f4f8fb',
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+  },
+  FAB: {padding: 15},
 });
