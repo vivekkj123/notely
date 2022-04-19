@@ -18,6 +18,7 @@ const HomeScreen = ({navigation}) => {
     getNotesFromDB();
   }, []);
   const [Notes, setNotes] = useState([]);
+  const [Search, setSearch] = useState('');
   const [FilteredNotes, setFilteredNotes] = useState([]);
   const [Selected, setSelected] = useState({
     AllNotes: true,
@@ -26,6 +27,14 @@ const HomeScreen = ({navigation}) => {
     Images: false,
     Todo: false,
   });
+  let SearchFunction = text => {
+    setSearch(text);
+    setFilteredNotes(
+      Notes.filter(note =>
+        note.title.toLowerCase().includes(Search.toLowerCase()),
+      ),
+    );
+  };
   return (
     <View style={styles.HomeScreen}>
       <View style={styles.Appbar}>
@@ -40,6 +49,8 @@ const HomeScreen = ({navigation}) => {
           borderTopWidth: 0,
           borderBottomWidth: 0,
         }}
+        value={Search}
+        onChangeText={SearchFunction}
       />
       <View style={styles.filterBar}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
