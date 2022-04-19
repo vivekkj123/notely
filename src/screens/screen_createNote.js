@@ -1,10 +1,57 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {Header, Icon} from '@rneui/base';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
-import {getDBConnection, saveNote} from '../db-service';
+import {
+  findNoteByid,
+  getDBConnection,
+  saveNote,
+  updateNote,
+} from '../db-service';
 
-const CreateNote = ({navigation}) => {
+const CreateNote = ({route, navigation}) => {
+  const params = route.params;
+  const update = params?.update;
+  const id = params?.id;
+  useEffect(() => {
+    let updateNoteState = async () => {
+      const db = await getDBConnection();
+      let resultNote = await findNoteByid(db, id);
+      console.log(resultNote);
+      setNewNote(resultNote);
+    };
+    if (update) {
+      updateNoteState();
+    }
+  }, [update, id]);
+  let createUpdateNote = async () => {
+    const db = await getDBConnection();
+    update ? await updateNote(db, NewNote, id) : await saveNote(db, NewNote);
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'HomeScreen'}],
+    });
+  };
+  let handleCreation = () => {
+    if (NewNote.title === '' || NewNote.content === '') {
+      Alert.alert(
+        'Blank Notes are not allowed',
+        'Seems like title or body of note is empty. Please make sure you entered all properly',
+      );
+    } else if (NewNote.type === 'reminder') {
+      Alert.alert('Confirm', 'Confirm note as reminder?', [
+        {
+          text: 'Yes',
+          onPress: () => {
+            createUpdateNote();
+          },
+        },
+        {text: 'No', onPress: () => {}},
+      ]);
+    } else {
+      createUpdateNote();
+    }
+  };
   let currentDate = new Date().toLocaleString();
   const [NewNote, setNewNote] = useState({
     lastUpdated: currentDate,
@@ -32,14 +79,7 @@ const CreateNote = ({navigation}) => {
               color={'#6d74d2'}
               name="check"
               type="material-community"
-              onPress={async () => {
-                const db = await getDBConnection();
-                await saveNote(db, NewNote);
-                navigation.reset({
-                  index: 0,
-                  routes: [{name: 'HomeScreen'}],
-                });
-              }}
+              onPress={handleCreation}
             />
           }
         />

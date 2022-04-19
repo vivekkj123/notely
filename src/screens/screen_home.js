@@ -131,11 +131,13 @@ const HomeScreen = ({navigation}) => {
         ) : (
           FilteredNotes.map(note => (
             <HomeCard
+              id={note.id}
               key={note.lastUpdated}
               type={note.type}
               lastUpdated={note.lastUpdated}
               title={note.title}
               content={note.content}
+              navigation={navigation}
             />
           ))
         )}

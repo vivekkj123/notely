@@ -2,7 +2,8 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Card} from '@rneui/themed';
 import {Icon} from '@rneui/base';
-const HomeCard = ({type, lastUpdated, title, content}) => {
+import {TouchableHighlight} from 'react-native-gesture-handler';
+const HomeCard = ({id, type, lastUpdated, title, content, navigation}) => {
   let date = new Date(lastUpdated);
   // const Icons = {
   //   reminder: 'notifications',
@@ -41,25 +42,35 @@ const HomeCard = ({type, lastUpdated, title, content}) => {
     //   <Text>{updatedAt}</Text>
     //   <Text>{content}</Text>
     // </View>
-    <Card containerStyle={styles.CardContainer}>
-      <View style={styles.CardView}>
-        <Icon
-          name={Iconstyle.icon}
-          backgroundColor={Iconstyle.backgroundColor}
-          borderRadius={100}
-          iconStyle={styles.CardIcon}
-        />
-        <View style={styles.titleDateView}>
-          <Card.FeaturedTitle style={styles.title}>{title}</Card.FeaturedTitle>
-          <Card.FeaturedSubtitle style={styles.date}>
-            {date.toLocaleString()}
-          </Card.FeaturedSubtitle>
+    <TouchableHighlight
+      onPress={() => {
+        navigation.navigate('CreateNote', {
+          update: true,
+          id: id,
+        });
+      }}>
+      <Card containerStyle={styles.CardContainer}>
+        <View style={styles.CardView}>
+          <Icon
+            name={Iconstyle.icon}
+            backgroundColor={Iconstyle.backgroundColor}
+            borderRadius={100}
+            iconStyle={styles.CardIcon}
+          />
+          <View style={styles.titleDateView}>
+            <Card.FeaturedTitle style={styles.title}>
+              {title}
+            </Card.FeaturedTitle>
+            <Card.FeaturedSubtitle style={styles.date}>
+              {date.toLocaleString()}
+            </Card.FeaturedSubtitle>
+          </View>
         </View>
-      </View>
 
-      <Card.Divider />
-      <Text style={styles.content}>{content}</Text>
-    </Card>
+        <Card.Divider />
+        <Text style={styles.content}>{content}</Text>
+      </Card>
+    </TouchableHighlight>
   );
 };
 
