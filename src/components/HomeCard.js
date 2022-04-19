@@ -26,6 +26,11 @@ const HomeCard = ({type, lastUpdated, title, content}) => {
       backgroundColor: '#ed676c',
       icon: 'music-note',
     },
+    {
+      type: 'todo',
+      backgroundColor: '#a61b82',
+      icon: 'check-circle-outline',
+    },
   ];
   let Iconstyle = Icons.find(icon => icon.type === type);
 

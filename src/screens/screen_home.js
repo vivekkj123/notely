@@ -1,53 +1,30 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {Button, FAB, Icon, SearchBar} from '@rneui/base';
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import React, {useEffect, useState} from 'react';
+import {FAB, Icon, SearchBar} from '@rneui/base';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import HomeCard from '../components/HomeCard';
+import {getDBConnection, getNotes} from '../db-service';
 
 const HomeScreen = ({navigation}) => {
-  const [Notes, setNotes] = useState([
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986246090,
-      type: 'reminder',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986246590,
-      type: 'audio',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986246090,
-      lastUpdated: 1649986247090,
-      type: 'image',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-    {
-      createdAt: 1649986247590,
-      lastUpdated: 1649986247590,
-      type: 'reminder',
-      title: 'First Note',
-      content:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsa tempore iste numquam nobis. Aspernatur voluptatum debitis perspiciatis, autem ipsum officiis in consectetur cupiditate, error, neque animi qui odit necessitatibus.',
-    },
-  ]);
+  let getNotesFromDB = async () => {
+    const db = await getDBConnection();
+    let notes = await getNotes(db);
+    if (notes) {
+      setNotes(notes);
+      setFilteredNotes(notes);
+    }
+  };
+  useEffect(() => {
+    getNotesFromDB();
+  }, []);
+  const [Notes, setNotes] = useState([]);
+  const [FilteredNotes, setFilteredNotes] = useState([]);
   const [Selected, setSelected] = useState({
     AllNotes: true,
     Reminder: false,
     Audio: false,
     Images: false,
+    Todo: false,
   });
   return (
     <View style={styles.HomeScreen}>
@@ -65,66 +42,97 @@ const HomeScreen = ({navigation}) => {
         }}
       />
       <View style={styles.filterBar}>
-        <TouchableOpacity
-          onPress={() => {
-            setSelected({
-              AllNotes: true,
-              Reminder: false,
-              Audio: false,
-              Images: false,
-            });
-          }}
-          style={Selected.AllNotes ? styles.filterBtnActive : styles.filterBtn}>
-          <Text style={styles.filterBtn_Text}>All Notes</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setSelected({
-              Reminder: true,
-              AllNotes: false,
-              Audio: false,
-              Images: false,
-            });
-          }}
-          style={Selected.Reminder ? styles.filterBtnActive : styles.filterBtn}>
-          <Text style={styles.filterBtn_Text}>Reminder</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setSelected({
-              Audio: true,
-              AllNotes: false,
-              Reminder: false,
-              Images: false,
-            });
-          }}
-          style={Selected.Audio ? styles.filterBtnActive : styles.filterBtn}>
-          <Text style={styles.filterBtn_Text}>Audio</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setSelected({
-              Images: true,
-              AllNotes: false,
-              Reminder: false,
-              Audio: false,
-            });
-          }}
-          style={Selected.Images ? styles.filterBtnActive : styles.filterBtn}>
-          <Text style={styles.filterBtn_Text}>Images</Text>
-        </TouchableOpacity>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <TouchableOpacity
+            onPress={() => {
+              setSelected({
+                AllNotes: true,
+                Reminder: false,
+                Audio: false,
+                Images: false,
+                Todo: false,
+              });
+              setFilteredNotes(Notes);
+            }}
+            style={
+              Selected.AllNotes ? styles.filterBtnActive : styles.filterBtn
+            }>
+            <Text style={styles.filterBtn_Text}>All Notes</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setSelected({
+                Reminder: true,
+                AllNotes: false,
+                Audio: false,
+                Images: false,
+                Todo: false,
+              });
+              setFilteredNotes(Notes.filter(note => note.type === 'reminder'));
+            }}
+            style={
+              Selected.Reminder ? styles.filterBtnActive : styles.filterBtn
+            }>
+            <Text style={styles.filterBtn_Text}>Reminder</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setSelected({
+                Audio: true,
+                AllNotes: false,
+                Reminder: false,
+                Images: false,
+                Todo: false,
+              });
+              setFilteredNotes(Notes.filter(note => note.type === 'audio'));
+            }}
+            style={Selected.Audio ? styles.filterBtnActive : styles.filterBtn}>
+            <Text style={styles.filterBtn_Text}>Audio</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setSelected({
+                Images: true,
+                AllNotes: false,
+                Reminder: false,
+                Audio: false,
+                Todo: false,
+              });
+              setFilteredNotes(Notes.filter(note => note.type === 'image'));
+            }}
+            style={Selected.Images ? styles.filterBtnActive : styles.filterBtn}>
+            <Text style={styles.filterBtn_Text}>Images</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setSelected({
+                Images: false,
+                AllNotes: false,
+                Reminder: false,
+                Audio: false,
+                Todo: true,
+              });
+              setFilteredNotes(Notes.filter(note => note.type === 'todo'));
+            }}
+            style={Selected.Todo ? styles.filterBtnActive : styles.filterBtn}>
+            <Text style={styles.filterBtn_Text}>Todo</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
-
       <ScrollView>
-        {Notes.map(note => (
-          <HomeCard
-            key={note.lastUpdated}
-            type={note.type}
-            lastUpdated={note.lastUpdated}
-            title={note.title}
-            content={note.content}
-          />
-        ))}
+        {FilteredNotes.length === 0 ? (
+          <Text style={styles.NotFoundText}> No Notes found</Text>
+        ) : (
+          FilteredNotes.map(note => (
+            <HomeCard
+              key={note.lastUpdated}
+              type={note.type}
+              lastUpdated={note.lastUpdated}
+              title={note.title}
+              content={note.content}
+            />
+          ))
+        )}
       </ScrollView>
       <FAB
         title={'Create'}
@@ -172,6 +180,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   filterBtn_Text: {
+    color: '#000',
+  },
+  NotFoundText: {
+    textAlign: 'center',
+    paddingVertical: 15,
     color: '#000',
   },
 });
