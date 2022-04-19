@@ -1,10 +1,29 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from '@rneui/themed';
 import {FAB, Icon, Image} from '@rneui/base';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createTable, getDBConnection} from '../db-service';
 
 const GettingStarted = ({navigation}) => {
+  useEffect(() => {
+    let identifyFirstLogin = async () => {
+      let isFirstLogin = await AsyncStorage.getItem('FirstLogin');
+      console.log(isFirstLogin);
+      if (JSON.parse(isFirstLogin) === false) {
+        console.log('Not a first login');
+
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'HomeScreen'}],
+        });
+      }
+    };
+    identifyFirstLogin();
+  }, [navigation]);
+
   const {theme} = useTheme();
+
   return (
     <View style={styles.GettingStarted}>
       <Text style={theme.Text.titleStyle}>Notely</Text>
@@ -37,7 +56,10 @@ const GettingStarted = ({navigation}) => {
           />
         }
         iconPosition="right"
-        onPress={() => {
+        onPress={async () => {
+          const db = await getDBConnection();
+          await createTable(db);
+          AsyncStorage.setItem('FirstLogin', 'false');
           navigation.reset({
             index: 0,
             routes: [{name: 'HomeScreen'}],
