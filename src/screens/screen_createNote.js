@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Header, Icon} from '@rneui/base';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import {
+  deleteNote,
   findNoteByid,
   getDBConnection,
   saveNote,
@@ -74,13 +75,32 @@ const CreateNote = ({route, navigation}) => {
             />
           }
           rightComponent={
-            <Icon
-              size={30}
-              color={'#6d74d2'}
-              name="check"
-              type="material-community"
-              onPress={handleCreation}
-            />
+            <View style={styles.rightButton}>
+              {update ? (
+                <Icon
+                  size={30}
+                  color={'#ed676c'}
+                  name="delete"
+                  type="material-community"
+                  onPress={async () => {
+                    const db = await getDBConnection();
+
+                    deleteNote(db, id);
+                    navigation.reset({
+                      index: 0,
+                      routes: [{name: 'HomeScreen'}],
+                    });
+                  }}
+                />
+              ) : null}
+              <Icon
+                size={30}
+                color={'#6d74d2'}
+                name="check"
+                type="material-community"
+                onPress={handleCreation}
+              />
+            </View>
           }
         />
         <View style={styles.CreateNote}>
@@ -171,5 +191,8 @@ const styles = StyleSheet.create({
   },
   NoteContent: {
     color: '#535353',
+  },
+  rightButton: {
+    flexDirection: 'row',
   },
 });

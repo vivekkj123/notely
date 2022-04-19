@@ -57,8 +57,8 @@ export const updateNote = async (db, note, id) => {
   WHERE id = ${id} `;
   await db.executeSql(updateQuery);
 };
-export const deleteNotes = async (db, id) => {
-  const deleteQuery = `DELETE from notes where rowid = ${id}`;
+export const deleteNote = async (db, id) => {
+  const deleteQuery = `DELETE from notes where id = ${id}`;
   await db.executeSql(deleteQuery);
 };
 

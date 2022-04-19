@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Card} from '@rneui/themed';
 import {Icon} from '@rneui/base';
-import {TouchableHighlight} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 const HomeCard = ({id, type, lastUpdated, title, content, navigation}) => {
   let date = new Date(lastUpdated);
   // const Icons = {
@@ -36,13 +36,7 @@ const HomeCard = ({id, type, lastUpdated, title, content, navigation}) => {
   let Iconstyle = Icons.find(icon => icon.type === type);
 
   return (
-    // <View>
-    //   <Text>{type}</Text>
-    //   <Text>{title}</Text>
-    //   <Text>{updatedAt}</Text>
-    //   <Text>{content}</Text>
-    // </View>
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={() => {
         navigation.navigate('CreateNote', {
           update: true,
@@ -70,7 +64,7 @@ const HomeCard = ({id, type, lastUpdated, title, content, navigation}) => {
         <Card.Divider />
         <Text style={styles.content}>{content}</Text>
       </Card>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
