@@ -10,6 +10,10 @@
 - 3 Types of notes are available - Reminder, Audio and Picture notes
 - Good UI/UX
 
+### Screenshots:
+![](./doc/screenshot-1.png)
+![](./doc/screenshot-2.png)
+
 ### Development Setup 👾
 - Clone the repository:
 	`git clone https://github.com/vivekkj123/notely.git`
